@@ -29,6 +29,7 @@ export {
   isArrayLike,
   transformForSerialization,
   transformGameResponse,
+  transformGameForTransport,
   parseDate,
   hydrateDates,
 } from './serialization'
