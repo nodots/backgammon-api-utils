@@ -1,8 +1,10 @@
 /**
  * API Request Types
- * 
+ *
  * These types define the shape of data sent TO the API from clients.
  */
+
+import { UserPreferences } from './users'
 
 /**
  * Request to create a new game with two players
@@ -38,4 +40,5 @@ export interface UpdateUserRequest {
   picture?: string
   locale?: string
   userType?: string
+  preferences?: UserPreferences
 }

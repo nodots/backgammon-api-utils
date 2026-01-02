@@ -41,6 +41,10 @@ export type UserPreferences = {
   locale?: string
   theme?: string
   notifications?: boolean
+  /** Username on eXtreme Gammon for matching imported games */
+  xgUsername?: string
+  /** Username on Backgammon Galaxy for matching imported games */
+  bgUsername?: string
 }
 
 /**
@@ -59,6 +63,27 @@ export type UserState =
  * User type values
  */
 export type UserType = 'human' | 'robot'
+
+/**
+ * Skill level for robots
+ */
+export type SkillLevel = 'novice' | 'beginner' | 'intermediate' | 'advanced' | 'expert'
+
+/**
+ * Robot skill configuration - controls GNU backgammon AI strength
+ */
+export interface SkillConfig {
+  /** Evaluation depth (1-3, higher = stronger) */
+  evalPlies?: number
+  /** Move filter breadth (0=Tiny, 1=Narrow, 2=Normal, 3=Large, 4=Huge) */
+  moveFilter?: number
+  /** Random noise (0-1.0, higher = weaker/more random) */
+  noise?: number
+  /** Enable pruning optimization */
+  usePruning?: boolean
+  /** Skill level label */
+  skillLevel?: SkillLevel
+}
 
 /**
  * External user representation (from Auth0 or other auth providers)
@@ -97,6 +122,17 @@ export interface User {
   createdAt: Date
   updatedAt: Date
   preferences?: UserPreferences
+  // User stats - updated after every game played or imported
+  averagePR?: string | null
+  gamesAnalyzed?: number
+  totalMovesAnalyzed?: number
+  errorsDoubtful?: number
+  errorsError?: number
+  errorsBlunder?: number
+  errorsVeryBad?: number
+  statsUpdatedAt?: Date | null
+  // Robot skill configuration - only used for robot users
+  skillConfig?: SkillConfig | null
 }
 
 /**
