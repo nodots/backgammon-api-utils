@@ -65,6 +65,11 @@ export type UserState =
 export type UserType = 'human' | 'robot'
 
 /**
+ * Robot kind - distinguishes between playable robots (with AI) and import-only robots
+ */
+export type RobotKind = 'playable' | 'import-only'
+
+/**
  * Skill level for robots
  */
 export type SkillLevel = 'novice' | 'beginner' | 'intermediate' | 'advanced' | 'expert'
@@ -145,4 +150,36 @@ export interface AuthenticatedRequest extends Request {
     name?: string
     [key: string]: any
   }
+}
+
+/**
+ * Determine if a robot user is playable (has AI) or import-only.
+ * Robots with skillConfig are playable, those without are for imports only.
+ */
+export function getRobotKind(user: User): RobotKind {
+  if (user.userType !== 'robot') {
+    throw new Error('getRobotKind called on non-robot user')
+  }
+  return user.skillConfig ? 'playable' : 'import-only'
+}
+
+/**
+ * Check if a robot user is playable (has AI and can be selected as opponent).
+ */
+export function isPlayableRobot(user: User): boolean {
+  return user.userType === 'robot' && user.skillConfig !== null && user.skillConfig !== undefined
+}
+
+/**
+ * Check if a robot user is import-only (no AI, used for imported games).
+ */
+export function isImportOnlyRobot(user: User): boolean {
+  return user.userType === 'robot' && (user.skillConfig === null || user.skillConfig === undefined)
+}
+
+/**
+ * Filter a list of users to only include playable robots.
+ */
+export function filterPlayableRobots(users: User[]): User[] {
+  return users.filter(isPlayableRobot)
 }
