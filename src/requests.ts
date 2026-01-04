@@ -7,11 +7,24 @@
 import { UserPreferences } from './users'
 
 /**
+ * Game rules configuration
+ */
+export interface GameRulesConfig {
+  useCrawfordRule?: boolean
+  useJacobyRule?: boolean
+  useBeaverRule?: boolean
+  useRaccoonRule?: boolean
+  useMurphyRule?: boolean
+  useHollandRule?: boolean
+}
+
+/**
  * Request to create a new game with two players
  */
 export interface CreateGameRequest {
   player1: { userId: string; isRobot: boolean }
   player2: { userId: string; isRobot: boolean }
+  rules?: GameRulesConfig
 }
 
 /**
