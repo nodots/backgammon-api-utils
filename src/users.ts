@@ -72,7 +72,7 @@ export type RobotKind = 'playable' | 'import-only'
 /**
  * Skill level for robots
  */
-export type SkillLevel = 'novice' | 'beginner' | 'intermediate' | 'advanced' | 'expert'
+export type SkillLevel = 'novice' | 'beginner' | 'intermediate' | 'advanced' | 'expert' | 'worldclass' | 'grandmaster'
 
 /**
  * Robot skill configuration - controls GNU backgammon AI strength
