@@ -1,6 +1,6 @@
 {
   "name": "@nodots-llc/backgammon-api-utils",
-  "version": "4.6.4-staging.6",
+  "version": "4.6.4-staging.7",
   "description": "Shared utilities for nodots-backgammon API operations",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
