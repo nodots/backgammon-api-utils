@@ -10,6 +10,33 @@ export * from './websocket'
 // Re-export user and auth types
 export * from './users'
 
+// Re-export import context types
+export * from './import-context'
+
+// Re-export caching utilities
+export { createRequestCache } from './cache'
+export type { RequestCache } from './cache'
+
+// Re-export request coalescing utilities
+export {
+  createRequestCoalescer,
+  createCachedCoalescedFetcher,
+} from './coalesce'
+export type { RequestCoalescer, CachedCoalescedFetcher } from './coalesce'
+
+// Re-export serialization utilities
+export {
+  setToArray,
+  ensureArray,
+  mapToObject,
+  isArrayLike,
+  transformForSerialization,
+  transformGameResponse,
+  transformGameForTransport,
+  parseDate,
+  hydrateDates,
+} from './serialization'
+
 // Specific exports for clarity
 export type { BackgammonGamePreferences, GamePreferences } from './users'
 
