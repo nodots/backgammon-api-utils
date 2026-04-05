@@ -10,6 +10,9 @@ export * from './websocket'
 // Re-export user and auth types
 export * from './users'
 
+// Re-export import context types
+export * from './import-context'
+
 // Re-export caching utilities
 export { createRequestCache } from './cache'
 export type { RequestCache } from './cache'
@@ -29,6 +32,7 @@ export {
   isArrayLike,
   transformForSerialization,
   transformGameResponse,
+  transformGameForTransport,
   parseDate,
   hydrateDates,
 } from './serialization'

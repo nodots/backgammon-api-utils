@@ -150,6 +150,46 @@ export function transformGameResponse<T extends { activePlay?: { moves?: unknown
 }
 
 /**
+ * Transforms a BackgammonGame for network transport by removing redundant data.
+ *
+ * Removes:
+ * - activePlay.board (duplicate of game.board, ~10KB savings)
+ *
+ * This function should be called before sending game data over REST or WebSocket.
+ * The client should always use game.board for board state.
+ *
+ * @param gameData The game data to transform
+ * @returns A new game object with redundant data removed
+ */
+export function transformGameForTransport<T>(gameData: T): T {
+  if (!gameData) {
+    return gameData
+  }
+
+  // First apply standard serialization (Set→Array, etc.)
+  // Type assertion needed because transformGameResponse has a narrower constraint
+  const transformed = transformForSerialization(gameData)
+
+  // Remove activePlay.board if present (it's a duplicate of game.board)
+  if (
+    transformed &&
+    typeof transformed === 'object' &&
+    'activePlay' in transformed &&
+    transformed.activePlay &&
+    typeof transformed.activePlay === 'object'
+  ) {
+    const activePlay = transformed.activePlay as Record<string, unknown>
+    if ('board' in activePlay) {
+      const { board: _unusedBoard, ...activePlayWithoutBoard } = activePlay
+      // Type assertion needed because we're restructuring the object
+      ;(transformed as Record<string, unknown>).activePlay = activePlayWithoutBoard
+    }
+  }
+
+  return transformed
+}
+
+/**
  * Date string to Date object converter.
  * JSON serialization converts Dates to ISO strings; this converts them back.
  *
