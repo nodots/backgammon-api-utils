@@ -4,7 +4,7 @@
  * These types define the shape of WebSocket events sent from the API to clients.
  */
 
-import type { BackgammonPlayer, BackgammonMove } from '@nodots-llc/backgammon-types'
+import type { BackgammonPlayer, BackgammonMove } from '@nodots/backgammon-types'
 import type { SerializedBackgammonGame } from './responses'
 
 /**

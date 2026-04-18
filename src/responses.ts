@@ -25,7 +25,7 @@ import type {
   BackgammonCube,
   BackgammonOffer,
   BackgammonDice
-} from '@nodots-llc/backgammon-types'
+} from '@nodots/backgammon-types'
 
 /**
  * Serialized version of BackgammonPlay where moves is an Array instead of Set
