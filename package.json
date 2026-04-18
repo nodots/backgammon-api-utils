@@ -21,7 +21,7 @@
     "boardgame"
   ],
   "author": "Ken Riley <kenr@nodots.com>",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "publishConfig": {
     "access": "public"
   },
