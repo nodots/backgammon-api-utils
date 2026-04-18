@@ -1,6 +1,6 @@
 {
-  "name": "@nodots-llc/backgammon-api-utils",
-  "version": "4.6.4-staging.15",
+  "name": "@nodots/backgammon-api-utils",
+  "version": "1.0.0-rc.1",
   "description": "Shared utilities for nodots-backgammon API operations",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,11 +27,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nodots/nodots-backgammon-api-utils.git"
+    "url": "git+https://github.com/nodots/backgammon-api-utils.git"
   },
-  "homepage": "https://github.com/nodots/nodots-backgammon-api-utils",
+  "homepage": "https://github.com/nodots/backgammon-api-utils",
   "bugs": {
-    "url": "https://github.com/nodots/nodots-backgammon-api-utils/issues"
+    "url": "https://github.com/nodots/backgammon-api-utils/issues"
   },
   "scripts": {
     "build": "tsc",
@@ -47,7 +47,7 @@
     "publish:dry-run": "npm run build && npm publish --dry-run"
   },
   "dependencies": {
-    "@nodots-llc/backgammon-types": "file:../types"
+    "@nodots/backgammon-types": "file:../types"
   },
   "devDependencies": {
     "@eslint/js": "^9.2.0",
