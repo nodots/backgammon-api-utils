@@ -4,7 +4,7 @@
  * These types define user-related data structures shared between API and clients.
  */
 
-import { Request } from 'express'
+import type { Request } from 'express'
 
 /**
  * User preference object
