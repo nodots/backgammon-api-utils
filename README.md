@@ -1,6 +1,6 @@
-# @nodots-llc/backgammon-api-utils
+# @nodots/backgammon-api-utils
 
-**Version 4.6.4** | Shared Utilities for API Operations
+**Version 1.0.0** | Shared Utilities for API Operations
 
 Shared utilities for Nodots Backgammon API operations, including request/response types, serialization helpers, caching, and WebSocket event definitions.
 
@@ -32,7 +32,7 @@ Shared utilities for Nodots Backgammon API operations, including request/respons
 ## Installation
 
 ```bash
-npm install @nodots-llc/backgammon-api-utils
+npm install @nodots/backgammon-api-utils
 ```
 
 ---
@@ -41,7 +41,7 @@ npm install @nodots-llc/backgammon-api-utils
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    @nodots-llc/backgammon-api-utils                         │
+│                    @nodots/backgammon-api-utils                         │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
@@ -90,7 +90,7 @@ src/
 ### CreateGameRequest
 
 ```typescript
-import { CreateGameRequest } from '@nodots-llc/backgammon-api-utils'
+import { CreateGameRequest } from '@nodots/backgammon-api-utils'
 
 const request: CreateGameRequest = {
   player1: { userId: 'user-1', isRobot: false },
@@ -101,7 +101,7 @@ const request: CreateGameRequest = {
 ### CreateUserRequest
 
 ```typescript
-import { CreateUserRequest } from '@nodots-llc/backgammon-api-utils'
+import { CreateUserRequest } from '@nodots/backgammon-api-utils'
 
 const request: CreateUserRequest = {
   source: 'auth0',
@@ -116,7 +116,7 @@ const request: CreateUserRequest = {
 ### UpdateUserRequest
 
 ```typescript
-import { UpdateUserRequest } from '@nodots-llc/backgammon-api-utils'
+import { UpdateUserRequest } from '@nodots/backgammon-api-utils'
 
 const request: UpdateUserRequest = {
   nickname: 'newNickname',
@@ -140,7 +140,7 @@ import {
   ApiErrorResponse,
   isApiError,
   isApiSuccess
-} from '@nodots-llc/backgammon-api-utils'
+} from '@nodots/backgammon-api-utils'
 
 // Success response
 const success: ApiSuccessResponse<Game> = {
@@ -169,7 +169,7 @@ if (isApiError(response)) {
 import {
   createSuccessResponse,
   createErrorResponse
-} from '@nodots-llc/backgammon-api-utils'
+} from '@nodots/backgammon-api-utils'
 
 // Create success response
 const success = createSuccessResponse({ id: '123', name: 'Test' })
@@ -185,7 +185,7 @@ const error = createErrorResponse('VALIDATION_ERROR', 'Invalid input')
 ### Set to Array
 
 ```typescript
-import { setToArray, ensureArray } from '@nodots-llc/backgammon-api-utils'
+import { setToArray, ensureArray } from '@nodots/backgammon-api-utils'
 
 // Convert Set to Array
 const set = new Set([1, 2, 3])
@@ -201,7 +201,7 @@ const result = ensureArray(possibleSet) // Always returns array
 import {
   transformGameResponse,
   transformGameForTransport
-} from '@nodots-llc/backgammon-api-utils'
+} from '@nodots/backgammon-api-utils'
 
 // Transform game for JSON response
 const transportGame = transformGameForTransport(game)
@@ -213,7 +213,7 @@ const clientGame = transformGameResponse(apiResponse)
 ### Date Handling
 
 ```typescript
-import { parseDate, hydrateDates } from '@nodots-llc/backgammon-api-utils'
+import { parseDate, hydrateDates } from '@nodots/backgammon-api-utils'
 
 // Parse ISO date string
 const date = parseDate('2025-01-15T10:30:00Z')
@@ -229,7 +229,7 @@ const hydrated = hydrateDates(apiResponse, ['createdAt', 'updatedAt'])
 ### Request Cache
 
 ```typescript
-import { createRequestCache, RequestCache } from '@nodots-llc/backgammon-api-utils'
+import { createRequestCache, RequestCache } from '@nodots/backgammon-api-utils'
 
 // Create cache with 5 minute TTL
 const cache = createRequestCache<Game>(5 * 60 * 1000)
@@ -253,7 +253,7 @@ cache.clear()
 ### Coalescer
 
 ```typescript
-import { createRequestCoalescer } from '@nodots-llc/backgammon-api-utils'
+import { createRequestCoalescer } from '@nodots/backgammon-api-utils'
 
 // Create coalescer - identical concurrent requests share one fetch
 const coalescer = createRequestCoalescer<Game>()
@@ -269,7 +269,7 @@ const [game1, game2] = await Promise.all([
 ### Cached Coalesced Fetcher
 
 ```typescript
-import { createCachedCoalescedFetcher } from '@nodots-llc/backgammon-api-utils'
+import { createCachedCoalescedFetcher } from '@nodots/backgammon-api-utils'
 
 // Combines caching and coalescing
 const fetcher = createCachedCoalescedFetcher<Game>(60000) // 1 min TTL
@@ -284,7 +284,7 @@ const game = await fetcher.fetch('game-123', () => api.games.get('game-123'))
 ### Event Types
 
 ```typescript
-import { WebSocketEvent, GameEvent } from '@nodots-llc/backgammon-api-utils'
+import { WebSocketEvent, GameEvent } from '@nodots/backgammon-api-utils'
 
 // Game events
 type GameEvent =
@@ -329,7 +329,7 @@ interface MoveMadePayload {
 ### User Preferences
 
 ```typescript
-import { UserPreferences, BackgammonGamePreferences } from '@nodots-llc/backgammon-api-utils'
+import { UserPreferences, BackgammonGamePreferences } from '@nodots/backgammon-api-utils'
 
 interface UserPreferences {
   theme?: 'light' | 'dark'
@@ -359,7 +359,7 @@ import {
   createSuccessResponse,
   createErrorResponse,
   transformGameForTransport
-} from '@nodots-llc/backgammon-api-utils'
+} from '@nodots/backgammon-api-utils'
 
 app.post('/games', async (req, res) => {
   const request: CreateGameRequest = req.body
@@ -380,7 +380,7 @@ import {
   isApiError,
   transformGameResponse,
   createCachedCoalescedFetcher
-} from '@nodots-llc/backgammon-api-utils'
+} from '@nodots/backgammon-api-utils'
 
 const gameFetcher = createCachedCoalescedFetcher<Game>(30000)
 
