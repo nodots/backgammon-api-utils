@@ -26,8 +26,6 @@ export type { RequestCoalescer, CachedCoalescedFetcher } from './coalesce'
 
 // Re-export serialization utilities
 export {
-  setToArray,
-  ensureArray,
   mapToObject,
   isArrayLike,
   transformForSerialization,
@@ -36,6 +34,24 @@ export {
   parseDate,
   hydrateDates,
 } from './serialization'
+
+// Re-export position-ID decoding + coordinate-frame helpers. Browser-safe:
+// no core, no native addons, no Node-only globals. Use these from the
+// client for rendering historical positions and from the api for hint
+// text + PR region classification.
+export {
+  decodePositionId,
+  importFromDecoded,
+  buildBoardFromImport,
+  boardFromPositionId,
+  calculatePipCount,
+  fromGnuFrame,
+  toGnuFrame,
+  classifyRegion,
+  type DecodedGnuBoard,
+  type OnRollContext,
+  type BoardRegion,
+} from './position'
 
 // Specific exports for clarity
 export type { BackgammonGamePreferences, GamePreferences } from './users'

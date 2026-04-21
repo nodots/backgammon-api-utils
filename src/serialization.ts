@@ -1,44 +1,11 @@
 /**
  * Type-safe transformation helpers for API responses.
- * Centralizes Set→Array conversion logic and other serialization concerns.
  *
- * JSON serialization cannot represent JavaScript Sets and Maps natively.
- * The core library uses Set for game.activePlay.moves, but API responses
- * must serialize these as Arrays. This module provides utilities to handle
- * the conversion in a centralized, type-safe manner.
+ * Historically this module bridged Set→Array because core.activePlay.moves
+ * was a Set. After issue #159 moves are always Arrays, so the Set shims
+ * (setToArray / ensureArray) have been removed as dead code. Map and
+ * deep-object helpers remain for the transport pipeline.
  */
-
-/**
- * Converts a Set to an Array if it's a Set, otherwise returns the value as-is.
- * Handles null/undefined gracefully.
- *
- * @param value A Set, Array, or null/undefined
- * @returns An Array (possibly empty) or the original value if already an array
- */
-export function setToArray<T>(value: Set<T> | T[] | null | undefined): T[] {
-  if (value === null || value === undefined) {
-    return []
-  }
-  if (value instanceof Set) {
-    return Array.from(value)
-  }
-  if (Array.isArray(value)) {
-    return value
-  }
-  // Fallback for any iterable-like object (defensive)
-  return Array.from(value)
-}
-
-/**
- * Ensures a value is an Array. If it's a Set, converts it.
- * If it's null/undefined, returns empty array.
- * If it's already an Array, returns it.
- *
- * Use this when you need to guarantee an Array result.
- */
-export function ensureArray<T>(value: Set<T> | T[] | null | undefined): T[] {
-  return setToArray(value)
-}
 
 /**
  * Converts a Map to a plain object.
@@ -133,7 +100,8 @@ export function transformGameResponse<T extends { activePlay?: { moves?: unknown
 
   const transformed = transformForSerialization(gameData)
 
-  // Ensure activePlay.moves is an array (defensive)
+  // Defensive: if anything sneaks through as a non-array, coerce to one.
+  // Post-issue-#159 this branch should be unreachable in practice.
   if (
     transformed &&
     typeof transformed === 'object' &&
@@ -142,7 +110,7 @@ export function transformGameResponse<T extends { activePlay?: { moves?: unknown
   ) {
     const activePlay = transformed.activePlay as { moves?: unknown }
     if (activePlay.moves !== undefined && !Array.isArray(activePlay.moves)) {
-      activePlay.moves = ensureArray(activePlay.moves as Set<unknown> | unknown[])
+      activePlay.moves = []
     }
   }
 
