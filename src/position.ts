@@ -183,6 +183,14 @@ export function toGnuFrame(
  *   22-24 = opponentBearing
  *   0     = off
  *   25    = bar
+ *
+ * NOTE: `0 → 'off'` is the destination convention. GNU's MoveHint.moves
+ * uses `from=0` for bar-entry origins, which would misclassify through
+ * this function. Callers working directly from GNU MoveHint should use
+ * {@link classifyGnuMoveOrigin} instead so the bar/off ambiguity at 0
+ * is resolved via the MoveStep's `fromContainer` tag. The api/pr.ts
+ * and api/stats.ts callers translate bar origins to 25 before calling
+ * this, so they are unaffected.
  */
 export function classifyRegion(point: number | string): BoardRegion {
   if (point === 'bar' || point === BAR) return 'bar'
@@ -199,6 +207,38 @@ export function classifyRegion(point: number | string): BoardRegion {
   if (pos >= 22 && pos <= 24) return 'opponentBearing'
 
   return 'outerBoard'
+}
+
+/**
+ * Classify the ORIGIN region of a GNU Backgammon MoveHint step.
+ *
+ * GNU encodes bar-entry origins as `from=0, fromContainer='bar'`. That
+ * numeric 0 collides with the off-destination sentinel in
+ * {@link classifyRegion}, so a caller that naively passes `step.from`
+ * to `classifyRegion` gets `'off'` for a bar-entry move and displays a
+ * "bearing off" area description for a position where the on-roll
+ * player must enter from the bar.
+ *
+ * This helper consults the authoritative container tag first, falling
+ * back to the numeric classification for regular point-to-point origins.
+ * It is a narrow MoveStep-origin adapter — destinations are not its
+ * responsibility.
+ *
+ * @param from - point number in the mover's own direction frame
+ *   (already passed through {@link fromGnuFrame} if the caller started
+ *   from a GNU-frame point)
+ * @param fromContainer - GNU's container tag; `'bar' | 'point' | 'off'`
+ */
+export function classifyGnuMoveOrigin(
+  from: number,
+  fromContainer: 'bar' | 'point' | 'off'
+): BoardRegion {
+  // Container is authoritative. GNU never legitimately produces
+  // fromContainer='off' for a move origin (you cannot move from off),
+  // but if it ever does we treat it as a data-quality issue and fall
+  // through to classifyRegion rather than silently returning 'off'.
+  if (fromContainer === 'bar') return 'bar'
+  return classifyRegion(from)
 }
 
 // ─── board-import builder ────────────────────────────────────────────

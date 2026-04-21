@@ -48,6 +48,7 @@ export {
   fromGnuFrame,
   toGnuFrame,
   classifyRegion,
+  classifyGnuMoveOrigin,
   type DecodedGnuBoard,
   type OnRollContext,
   type BoardRegion,
