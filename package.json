@@ -1,6 +1,6 @@
 {
   "name": "@nodots/backgammon-api-utils",
-  "version": "1.0.0-rc.7",
+  "version": "1.0.0",
   "description": "Shared utilities for nodots-backgammon API operations",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -47,7 +47,7 @@
     "publish:dry-run": "npm run build && npm publish --dry-run"
   },
   "dependencies": {
-    "@nodots/backgammon-types": "1.0.0-rc.4",
+    "@nodots/backgammon-types": "^1.0.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
